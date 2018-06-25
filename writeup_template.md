@@ -1,20 +1,19 @@
 # **Traffic Sign Recognition** 
 
+This repository contains my solution for the project "Traffic Sign Recognition" of the Udacity Self-Driving Car Engineer Nanodegree Program. The python code could be found in the jupyter notebook [P1](P2.ipynb).
+
+The following part of the README contains a writeup which describes how the traffic sign recognition is achieved.
+
+
 ## Writeup
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+### Goals
 
----
-
-**Build a Traffic Sign Recognition Project**
-
-The goals / steps of this project are the following:
-* Load the data set (see below for links to the project data set)
-* Explore, summarize and visualize the data set
-* Design, train and test a model architecture
-* Use the model to make predictions on new images
-* Analyze the softmax probabilities of the new images
-* Summarize the results with a written report
+In the project the goal is to build, train and analyze a neuronal net which recognizes german traffic signs.
+The goal of this project can be seperated in three parts:
+* Explore and analyze the data set
+* Design, train and test a neuronal net
+* Analyze the preditions of the net
 
 
 [//]: # (Image References)
@@ -27,16 +26,6 @@ The goals / steps of this project are the following:
 [image6]: ./examples/placeholder.png "Traffic Sign 3"
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
-
-## Rubric Points
-### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
-
----
-### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ### Data Set Summary & Exploration
 
@@ -57,52 +46,93 @@ Here is an exploratory visualization of the data set. It is a bar chart showing 
 
 ![alt text][image1]
 
-### Design and Test a Model Architecture
 
-#### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
+### Design and Test of the Model Architecture
 
-As a first step, I decided to convert the images to grayscale because ...
+### 1. Image augmentation
+As a first step, the image data was augmented. This is done to make the calssification of the net more robust. Therefor the following methods are choosen:
+1. ### Change Brightness
 
-Here is an example of a traffic sign image before and after grayscaling.
+   The image is converted to the HSV color space. Then the V value is randomly changed.
+   ![alt text][image_changed_brightness]
 
-![alt text][image2]
+2. ### Crop
 
-As a last step, I normalized the image data because ...
+   A random 26x26 crop of the image is taken and then resized to 32x32.
+   ![alt text][image_cropped]
 
-I decided to generate additional data because ... 
+3. ### Pad
 
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
+   The image is randomly moved between -8 and 8 pixels independently in x and y direction. The resulting empty space is filled with black.
+   ![alt text][image_padded]
 
 
-#### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+4. ### Rotate
 
-My final model consisted of the following layers:
+   The image is randomly rotated by -15 to 15 degree.
+   ![alt text][image_rotated]
+
+
+This methods should generate images which are likely to appere in the real world.
+After the image augmentation the test images set contains 173995 images.
+
+
+### 2. Preprocessing the image data
+
+In the second step the image data was preprocessed. Therefor the images were converted to the YUV color space and grayscaled by using only the Y value.
+
+After that the image data standardization was preformed by substraction the mean and divede by the standart deviation over all images.
+
+![alt text][grayscaled]
+
+
+#### 3. The final model architecture
+
+The final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
+| Input         		| 32x32x1 Grayscale image   					| 
+| 1. Convolution 5x5    | 1x1 stride, same padding, outputs 32x32x8 	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
+| 2. Convolution 3x3    | 1x1 stride, same padding, outputs 32x32x8 	|
+| RELU					|												|
+| DROPOUT				|												|
+| 3. Convolution 3x3    | 2x2 stride, same padding, outputs 16x16x16 	|
+| RELU					|												|
+| 4. Convolution 3x3    | 1x1 stride, same padding, outputs 16x16x16 	|
+| RELU					|												|
+| DROPOUT				|												|
+| 5. Convolution 3x3    | 2x2 stride, same padding, outputs 8x8x32	 	|
+| RELU					|												|
+| 6. Convolution 3x3    | 1x1 stride, same padding, outputs 8x8x32	 	|
+| RELU					|												|
+| 7. Convolution 3x3    | 1x1 stride, same padding, outputs 8x8x32	 	|
+| RELU					|												|
+| 8. Convolution 3x3    | 1x1 stride, same padding, outputs 8x8x32	 	|
+| RELU					|												|
+| DROPOUT				|												|
+| Fully connected		| inputs 2048x1, outputs 43x1					|
+| Softmax				| 	        									|
 |						|												|
 |						|												|
  
 
+The model uses a simple architecture which follows the idea of the VGG and ResNet architecture.
+It uses manly 3x3 convolutional layer followed by one fully connected layer. For downsampling a stride of 2x2 is used rather the a pooling operation. If the amount of feature maps is increased it is doubled and the picture size halved.
 
-#### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+Additionally before the downsampling a dropout layer is used to prevent overfitting.
 
-To train the model, I used an ....
 
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+#### 4. Training of the model
+
+To train the model, the Adam optimizer is used, because it is the preferred optimizer at the moment. As loss the cross entropy between predictions and the correct labels is used.
+
+The Adam paper suggests default settings (0.001) for the learning rate which is used in this training. 
+
+The batch size is choosen as 256. The model was then trained over 50 epochs.
+
+#### 5. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
 * training set accuracy of ?
