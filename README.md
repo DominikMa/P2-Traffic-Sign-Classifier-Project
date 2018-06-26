@@ -1,6 +1,6 @@
 # **Traffic Sign Recognition** 
 
-This repository contains my solution for the project "Traffic Sign Recognition" of the Udacity Self-Driving Car Engineer Nanodegree Program. The python code could be found in the jupyter notebook [P1](P2.ipynb).
+This repository contains my solution for the project "Traffic Sign Recognition" of the Udacity Self-Driving Car Engineer Nanodegree Program. The python code could be found in the jupyter notebook [P2](P2.ipynb).
 
 The following part of the README contains a writeup which describes how the traffic sign recognition is achieved.
 
@@ -35,7 +35,7 @@ Using numpy to calculate summary statistics of the traffic
 signs data set:
 
 * The size of training set is 34799
-* The size of the validation set is ?
+* The size of the validation set is 4410
 * The size of test set is 12630
 * The shape of a traffic sign image is 32x32
 * The number of unique classes/labels in the data set is 43
@@ -97,27 +97,28 @@ The final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x1 Grayscale image   					| 
-| 1. Convolution 5x5    | 1x1 stride, same padding, outputs 32x32x8 	|
+| Input         		| 32x32x1 Grayscale image   					|
+| Dropout				| keep prop 0.9									| 
+| 1. Convolution 5x5    | 1x1 stride, same padding, outputs 32x32x16 	|
 | RELU					|												|
-| 2. Convolution 3x3    | 1x1 stride, same padding, outputs 32x32x8 	|
+| 2. Convolution 3x3    | 1x1 stride, same padding, outputs 32x32x16 	|
 | RELU					|												|
-| DROPOUT				|												|
-| 3. Convolution 3x3    | 2x2 stride, same padding, outputs 16x16x16 	|
+| Dropout				| keep prop 0.5									|
+| 3. Convolution 3x3    | 2x2 stride, same padding, outputs 16x16x32 	|
 | RELU					|												|
-| 4. Convolution 3x3    | 1x1 stride, same padding, outputs 16x16x16 	|
+| 4. Convolution 3x3    | 1x1 stride, same padding, outputs 16x16x132 	|
 | RELU					|												|
-| DROPOUT				|												|
-| 5. Convolution 3x3    | 2x2 stride, same padding, outputs 8x8x32	 	|
+| Dropout				| keep prop 0.5									|
+| 5. Convolution 3x3    | 2x2 stride, same padding, outputs 8x8x64	 	|
 | RELU					|												|
-| 6. Convolution 3x3    | 1x1 stride, same padding, outputs 8x8x32	 	|
+| 6. Convolution 3x3    | 1x1 stride, same padding, outputs 8x8x64	 	|
 | RELU					|												|
-| 7. Convolution 3x3    | 1x1 stride, same padding, outputs 8x8x32	 	|
+| 7. Convolution 3x3    | 1x1 stride, same padding, outputs 8x8x64	 	|
 | RELU					|												|
-| 8. Convolution 3x3    | 1x1 stride, same padding, outputs 8x8x32	 	|
+| 8. Convolution 3x3    | 1x1 stride, same padding, outputs 8x8x64	 	|
 | RELU					|												|
-| DROPOUT				|												|
-| Fully connected		| inputs 2048x1, outputs 43x1					|
+| Dropout				| keep prop 0.5									|
+| Fully connected		| inputs 4096x1, outputs 43x1					|
 | Softmax				| 	        									|
 |						|												|
 |						|												|
@@ -135,14 +136,14 @@ To train the model, the Adam optimizer is used, because it is the preferred opti
 
 The Adam paper suggests default settings (0.001) for the learning rate which is used in this training. 
 
-The batch size is chosen as 256. The model was then trained over 50 epochs.
+The batch size is chosen as 256. The model was then trained over 75 epochs.
 
 #### 5. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+The final model results were:
+* training set accuracy of 0.997
+* validation set accuracy of 0.972 
+* test set accuracy of 0.966
 
 As a starting point the LeNet architecture was tried, because it was already implemented. LeNet preforms well for the MNIST data and therefor may be good at the traffic signs as well.
 Simply using the LeNet model resulted in a validation set accuracy about 0.86.
@@ -157,7 +158,7 @@ The architecture follows the rules of using mainly 3x3 convolutional layer, when
 
 Because the German Traffic Sign data set is rather small compared to the ImageNet data set additionally dropout layers are used before the downsampling to prevent overfitting.
 
-After these changes the model preformed quite well and was chosen as the final model. 
+After these changes the model preformed quite well and was chosen as the final model. It reached a test set accuracy of 0.966.
 
 ### Test the Model on New Images
 
