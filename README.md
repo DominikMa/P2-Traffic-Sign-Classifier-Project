@@ -27,6 +27,33 @@ The goal of this project can be separated in three parts:
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
+[distribution_train]: ./writeup_images/distribution_train.png "Distribution over training images"
+[distribution_valid]: ./writeup_images/distribution_valid.png "Distribution over validation images"
+[distribution_test]: ./writeup_images/distribution_test.png "Distribution over test images"
+
+[image_changed_brightness]: ./writeup_images/image_changed_brightness.png "Example of an image with changed brightness"
+[image_cropped]: ./writeup_images/image_cropped.png "Example of an cropped image"
+[image_padded]: ./writeup_images/image_padded.png "Example of an padded image"
+[image_rotated]: ./writeup_images/image_rotated.png "Example of an rotated image"
+
+[grayscaled]: ./writeup_images/grayscaled.png "Example of an grayscaled image"
+
+[sign1]: ./writeup_images/sign1.png "New Traffic Sign 1"
+[sign2]: ./writeup_images/sign2.png "New Traffic Sign 2"
+[sign3]: ./writeup_images/sign3.png "New Traffic Sign 3"
+[sign4]: ./writeup_images/sign4.png "New Traffic Sign 4"
+[sign5]: ./writeup_images/sign5.png "New Traffic Sign 5"
+[sign6]: ./writeup_images/sign6.png "New Traffic Sign 6"
+[sign7]: ./writeup_images/sign7.png "New Traffic Sign 7"
+[sign8]: ./writeup_images/sign8.png "New Traffic Sign 8"
+[sign9]: ./writeup_images/sign9.png "New Traffic Sign 9"
+[sign10]: ./writeup_images/sign10.png "New Traffic Sign 10"
+[sign11]: ./writeup_images/sign11.png "New Traffic Sign 11"
+[sign12]: ./writeup_images/sign12.png "New Traffic Sign 12"
+[sign13]: ./writeup_images/sign13.png "New Traffic Sign 13"
+[sign14]: ./writeup_images/sign14.png "New Traffic Sign 14"
+
+
 ### Data Set Summary & Exploration
 
 #### 1. A basic summary of the data set
@@ -170,41 +197,54 @@ Here are 14 German traffic signs found on the web:
 ![alt text][sign6] ![alt text][sign7] ![alt text][sign8] ![alt text][sign9] ![alt text][sign10]
 ![alt text][sign11] ![alt text][sign12] ![alt text][sign13] ![alt text][sign14]
 
-The first image might be difficult to classify because ...
+The ninth, twelfth and fourteenth image might be difficult to classify because they are rotated or tilted.
+Especially signs which only appear rarely in the data set, like double curve, end of no passing and slippery road, are chosen because the model should preform well on frequents signs like yield.
 
-#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+#### 2. Predictions on these new traffic signs
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Image			        				|     Prediction       					| 
+|:-------------------------------------:|:-------------------------------------:| 
+| Right-of-way at the next intersection	| Right-of-way at the next intersection	| 
+| Yield     							| Yield 								|
+| Yield									| Yield									|
+| Keep right	      					| Keep right					 		|
+| Stop									| Stop      							|
+| Double curve							| Right-of-way at the next intersection	|
+| Double curve							| Double curve							|
+| End of no passing						| End of no passing						|
+| Slippery road							| Road work								|
+| Slippery road							| Slippery road							|
+| Slippery road							| Slippery road							|
+| Bumpy road							| Bumpy road							|
+| Bumpy road							| Bumpy road							|
+| Dangerous curve to the right			| Slippery road							|
 
+The model was able to correctly guess 11 of the 14 traffic signs, which gives an accuracy of 0.786 This accuracy is significant less then the accuracy of the test set. The reason for this should be the choice of the images from the web. Choosing images which are more frequent in the test set should lead to an higher accuracy.
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+#### 3. How certain the model is when predicting on each of the new images
 
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
-
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
-
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For the most images, the model is relatively sure in its prediction, even when the prediction is wrong. The top five soft max probabilities for the first image were
 
 | Probability         	|     Prediction	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+|  .99        			| Right-of-way at the next intersection			| 
+|  .0017   				| Beware of ice/snow 							|
+| ~.00					| Children crossing								|
+| ~.00	      			| Roundabout mandatory			 				|
+| ~.00				    | Double curve     								|
 
+The most top five soft max probabilities look like this.
 
-For the second image ... 
+The only image where the model was unsure was the sixth. Here the model predicted right-of-way at the next intersection on a double curve sign. The double curve appears in the top five soft max probabilities but only with a probability of 0.0022.
 
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+| Probability         	|     Prediction	        					| 
+|:---------------------:|:---------------------------------------------:| 
+|  .495        			| Right-of-way at the next intersection			| 
+|  .457   				| Beware of ice/snow 							|
+|  .026					| Children crossing								|
+|  .019	      			| Slippery road					 				|
+| ~.00				    | Double curve     								|
 
 
