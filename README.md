@@ -1,9 +1,8 @@
 # **Traffic Sign Recognition** 
 
-This repository contains my solution for the project "Traffic Sign Recognition" of the Udacity Self-Driving Car Engineer Nanodegree Program. The python code could be found in the jupyter notebook [P2](P2.ipynb).
+This repository contains my solution for the project "Traffic Sign Recognition" of the Udacity Self-Driving Car Engineer Nanodegree Program. The python code could be found in the jupyter notebook [Traffic Sign Classifier](Traffic_Sign_Classifier.ipynb). An example run of the notebook with its outputs can be found in [Traffic Sign Classifier Run](Traffic_Sign_Classifier.html)
 
 The following part of the README contains a writeup which describes how the traffic sign recognition is achieved.
-
 
 ## Writeup
 
@@ -81,18 +80,18 @@ As a first step, the image data was augmented. This is done to make the classifi
 
 2. ### Crop
 
-   A random 26x26 crop of the image is taken and then resized to 32x32.
+   A random 24x24 crop of the image is taken and then resized to 32x32.
    ![alt text][image_cropped]
 
 3. ### Pad
 
-   The image is randomly moved between -8 and 8 pixels independently in x and y direction. The resulting empty space is filled with black.
+   The image is randomly moved between -10 and 10 pixels independently in x and y direction. The resulting empty space is filled with black.
    ![alt text][image_padded]
 
 
 4. ### Rotate
 
-   The image is randomly rotated by -15 to 15 degree.
+   The image is randomly rotated by -20 to 20 degree.
    ![alt text][image_rotated]
 
 
