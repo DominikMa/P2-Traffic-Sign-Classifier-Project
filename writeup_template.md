@@ -9,11 +9,11 @@ The following part of the README contains a writeup which describes how the traf
 
 ### Goals
 
-In the project the goal is to build, train and analyze a neuronal net which recognizes german traffic signs.
-The goal of this project can be seperated in three parts:
+In the project the goal is to build, train and analyze a neuronal net which recognizes German traffic signs.
+The goal of this project can be separated in three parts:
 * Explore and analyze the data set
 * Design, train and test a neuronal net
-* Analyze the preditions of the net
+* Analyze the predictions of the net
 
 
 [//]: # (Image References)
@@ -29,28 +29,33 @@ The goal of this project can be seperated in three parts:
 
 ### Data Set Summary & Exploration
 
-#### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
+#### 1. A basic summary of the data set
 
-I used the pandas library to calculate summary statistics of the traffic
+Using numpy to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is ?
+* The size of training set is 34799
 * The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+* The size of test set is 12630
+* The shape of a traffic sign image is 32x32
+* The number of unique classes/labels in the data set is 43
 
-#### 2. Include an exploratory visualization of the dataset.
+#### 2. An exploratory visualization of the dataset
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+An interesting aspect of the dataset is the distribution over the labels. It shows how many training, validate and test pictures there are per label in the data sets. This is important because an not uniform distribution could lead to misinterpreting the results. For example a very high amount of stop signs and a low one for yield signs in all datasets could result in a trained model which is good at recognizing stop signs and bad for yield signs but still lead to a very low validate and test error.
+Not paying attention to the distribution of the dataset might lead to the conclusion that the model is good for all traffic signs.
 
-![alt text][image1]
+The distribution of the datasets is shown in the following pictures:
+
+![alt text][distribution_train]
+![alt text][distribution_valid]
+![alt text][distribution_test]
 
 
 ### Design and Test of the Model Architecture
 
 ### 1. Image augmentation
-As a first step, the image data was augmented. This is done to make the calssification of the net more robust. Therefor the following methods are choosen:
+As a first step, the image data was augmented. This is done to make the classification of the net more robust. Therefor the following methods are chosen:
 1. ### Change Brightness
 
    The image is converted to the HSV color space. Then the V value is randomly changed.
@@ -73,7 +78,7 @@ As a first step, the image data was augmented. This is done to make the calssifi
    ![alt text][image_rotated]
 
 
-This methods should generate images which are likely to appere in the real world.
+This methods should generate images which are likely to appear in the real world.
 After the image augmentation the test images set contains 173995 images.
 
 
@@ -81,7 +86,7 @@ After the image augmentation the test images set contains 173995 images.
 
 In the second step the image data was preprocessed. Therefor the images were converted to the YUV color space and grayscaled by using only the Y value.
 
-After that the image data standardization was preformed by substraction the mean and divede by the standart deviation over all images.
+After that the image data standardization was preformed by subtracting the mean and divide by the standard deviation over all images.
 
 ![alt text][grayscaled]
 
@@ -130,7 +135,7 @@ To train the model, the Adam optimizer is used, because it is the preferred opti
 
 The Adam paper suggests default settings (0.001) for the learning rate which is used in this training. 
 
-The batch size is choosen as 256. The model was then trained over 50 epochs.
+The batch size is chosen as 256. The model was then trained over 50 epochs.
 
 #### 5. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
@@ -139,27 +144,30 @@ My final model results were:
 * validation set accuracy of ? 
 * test set accuracy of ?
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+As a starting point the LeNet architecture was tried, because it was already implemented. LeNet preforms well for the MNIST data and therefor may be good at the traffic signs as well.
+Simply using the LeNet model resulted in a validation set accuracy about 0.86.
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
+To get a better result first some convolutional layer with RELU activation were added. Together with a longer training time of 20 epochs the model already reached the goal of validation set accuracy to be at least 0.93. 
 
-### Test a Model on New Images
+Recent publications, for example the ResNet paper, showed that the depth of the model is significant for image recognition, so that a model with even more layers was tried.
+The ResNet, which is based on the VGG net, is designed for the ImageNet data set and therefor presumably a bit oversized for the German Traffic Sign data set.
+It was chosen to follow a mix of the architecture of ResNet and VGG net with just fewer layers.
 
-#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+The architecture follows the rules of using mainly 3x3 convolutional layer, when downsampling use a stride in the convolutional layer and not a pooling operation and when downsampling half picture size and double amount of feature maps. The convolutional layers are then followed by one fully connected layer as classifier.
 
-Here are five German traffic signs that I found on the web:
+Because the German Traffic Sign data set is rather small compared to the ImageNet data set additionally dropout layers are used before the downsampling to prevent overfitting.
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+After these changes the model preformed quite well and was chosen as the final model. 
+
+### Test the Model on New Images
+
+#### 1. 14 new images of traffic signs found on the web
+
+Here are 14 German traffic signs found on the web:
+
+![alt text][sign1] ![alt text][sign2] ![alt text][sign3] ![alt text][sign4] ![alt text][sign5]
+![alt text][sign6] ![alt text][sign7] ![alt text][sign8] ![alt text][sign9] ![alt text][sign10]
+![alt text][sign11] ![alt text][sign12] ![alt text][sign13] ![alt text][sign14]
 
 The first image might be difficult to classify because ...
 
