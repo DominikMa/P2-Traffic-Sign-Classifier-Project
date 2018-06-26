@@ -18,15 +18,6 @@ The goal of this project can be separated in three parts:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
-
 [distribution_train]: ./writeup_images/distribution_train.png "Distribution over training images"
 [distribution_valid]: ./writeup_images/distribution_valid.png "Distribution over validation images"
 [distribution_test]: ./writeup_images/distribution_test.png "Distribution over test images"
@@ -38,20 +29,20 @@ The goal of this project can be separated in three parts:
 
 [grayscaled]: ./writeup_images/grayscaled.png "Example of an grayscaled image"
 
-[sign1]: ./writeup_images/sign1.png "New Traffic Sign 1"
-[sign2]: ./writeup_images/sign2.png "New Traffic Sign 2"
-[sign3]: ./writeup_images/sign3.png "New Traffic Sign 3"
-[sign4]: ./writeup_images/sign4.png "New Traffic Sign 4"
-[sign5]: ./writeup_images/sign5.png "New Traffic Sign 5"
-[sign6]: ./writeup_images/sign6.png "New Traffic Sign 6"
-[sign7]: ./writeup_images/sign7.png "New Traffic Sign 7"
-[sign8]: ./writeup_images/sign8.png "New Traffic Sign 8"
-[sign9]: ./writeup_images/sign9.png "New Traffic Sign 9"
-[sign10]: ./writeup_images/sign10.png "New Traffic Sign 10"
-[sign11]: ./writeup_images/sign11.png "New Traffic Sign 11"
-[sign12]: ./writeup_images/sign12.png "New Traffic Sign 12"
-[sign13]: ./writeup_images/sign13.png "New Traffic Sign 13"
-[sign14]: ./writeup_images/sign14.png "New Traffic Sign 14"
+[sign1]: ./images/sign1.png "New Traffic Sign 1"
+[sign2]: ./images/sign2.png "New Traffic Sign 2"
+[sign3]: ./images/sign3.png "New Traffic Sign 3"
+[sign4]: ./images/sign4.png "New Traffic Sign 4"
+[sign5]: ./images/sign5.png "New Traffic Sign 5"
+[sign6]: ./images/sign6.png "New Traffic Sign 6"
+[sign7]: ./images/sign7.png "New Traffic Sign 7"
+[sign8]: ./images/sign8.png "New Traffic Sign 8"
+[sign9]: ./images/sign9.png "New Traffic Sign 9"
+[sign10]: ./images/sign10.png "New Traffic Sign 10"
+[sign11]: ./images/sign11.png "New Traffic Sign 11"
+[sign12]: ./images/sign12.png "New Traffic Sign 12"
+[sign13]: ./images/sign13.png "New Traffic Sign 13"
+[sign14]: ./images/sign14.png "New Traffic Sign 14"
 
 
 ### Data Set Summary & Exploration
